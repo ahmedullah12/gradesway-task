@@ -82,9 +82,31 @@ const updateQuiz = async (quizId: string, payload: IUpdateQuiz) => {
   return result;
 };
 
+const deleteQuiz = async(quizId: string) => {
+  const quiz = await prisma.quiz.findUnique({
+    where: {
+      ID: quizId,
+    },
+  });
+
+  //check if quiz exists
+  if (!quiz) {
+    throw new AppError(httpStatus.NOT_FOUND, "Quiz not found");
+  }
+
+  const result = await prisma.quiz.delete({
+    where: {
+       ID: quizId
+    }
+  });
+
+  return result;
+}
+
 export const QuizServices = {
   createQuiz,
   getTeacherQuizzes,
   getSingleQuiz,
   updateQuiz,
+  deleteQuiz,
 };

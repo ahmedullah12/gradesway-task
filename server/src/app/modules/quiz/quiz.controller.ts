@@ -51,9 +51,23 @@ const updateQuiz = catchAsync(async (req, res) => {
   });
 });
 
+const deleteQuiz = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await QuizServices.deleteQuiz(id);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Quiz deleted successfully!!",
+    data: result,
+  });
+});
+
+
 export const QuizController = {
   createQuiz,
   getTeacherQuizzes,
   getSingleQuiz,
   updateQuiz,
+  deleteQuiz
 };

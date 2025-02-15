@@ -17,5 +17,6 @@ router.put(
   validateRequest(QuizValidations.updateQuizValidationSchema),
   QuizController.updateQuiz
 );
+router.delete("/:id", QuizController.deleteQuiz);
 
 export const QuizRoutes = router;
