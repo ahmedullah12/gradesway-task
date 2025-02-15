@@ -14,6 +14,20 @@ const createQuiz = catchAsync(async (req, res) => {
   });
 });
 
+const getTeacherQuizzes = catchAsync(async (req, res) => {
+  const result = await QuizServices.getTeacherQuizzes(
+    req.headers.authorization as string
+  );
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Quizzes fetched successfully!!",
+    data: result,
+  });
+});
+
 export const QuizController = {
   createQuiz,
+  getTeacherQuizzes,
 };

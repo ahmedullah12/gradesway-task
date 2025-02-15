@@ -10,5 +10,6 @@ router.post(
   validateRequest(QuizValidations.createQuizValidationSchema),
   QuizController.createQuiz,
 );
+router.get("/", QuizController.getTeacherQuizzes)
 
 export const QuizRoutes = router;
