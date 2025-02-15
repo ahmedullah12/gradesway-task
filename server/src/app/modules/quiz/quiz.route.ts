@@ -8,9 +8,14 @@ const router = Router();
 router.post(
   "/",
   validateRequest(QuizValidations.createQuizValidationSchema),
-  QuizController.createQuiz,
+  QuizController.createQuiz
 );
-router.get("/", QuizController.getTeacherQuizzes)
-router.get("/:id", QuizController.getSingleQuiz)
+router.get("/", QuizController.getTeacherQuizzes);
+router.get("/:id", QuizController.getSingleQuiz);
+router.put(
+  "/:id",
+  validateRequest(QuizValidations.updateQuizValidationSchema),
+  QuizController.updateQuiz
+);
 
 export const QuizRoutes = router;

@@ -10,6 +10,16 @@ const createQuizValidationSchema = z.object({
   }),
 });
 
+const updateQuizValidationSchema = z.object({
+  body: z.object({
+    title: z.string({
+      required_error: "Title is required!",
+    }).optional(),
+    description: z.string({ required_error: "Description is required!" }).optional(),
+  }),
+});
+
 export const QuizValidations = {
     createQuizValidationSchema,
+    updateQuizValidationSchema
 }

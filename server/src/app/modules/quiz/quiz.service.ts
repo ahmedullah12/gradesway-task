@@ -1,7 +1,7 @@
 import httpStatus from "http-status";
 import prisma from "../../../shared/prisma";
 import AppError from "../../errors/AppError";
-import { IQuiz } from "./quiz.interface";
+import { IQuiz, IUpdateQuiz } from "./quiz.interface";
 
 //create quiz
 const createQuiz = async (payload: IQuiz) => {
@@ -44,6 +44,7 @@ const getTeacherQuizzes = async (teacher_id: string) => {
   return result;
 };
 
+//get single quiz
 const getSingleQuiz = async (quizId: string) => {
   const quiz = await prisma.quiz.findUnique({
     where: {
@@ -52,15 +53,38 @@ const getSingleQuiz = async (quizId: string) => {
   });
 
   //check if quiz exists
-  if(!quiz){
-    throw new AppError(httpStatus.NOT_FOUND, "Quiz not found")
+  if (!quiz) {
+    throw new AppError(httpStatus.NOT_FOUND, "Quiz not found");
   }
 
   return quiz;
+};
+
+const updateQuiz = async (quizId: string, payload: IUpdateQuiz) => {
+  const quiz = await prisma.quiz.findUnique({
+    where: {
+      ID: quizId,
+    },
+  });
+
+  //check if quiz exists
+  if (!quiz) {
+    throw new AppError(httpStatus.NOT_FOUND, "Quiz not found");
+  }
+
+  const result = await prisma.quiz.update({
+    where: {
+      ID: quiz.ID,
+    },
+    data: payload,
+  });
+
+  return result;
 };
 
 export const QuizServices = {
   createQuiz,
   getTeacherQuizzes,
   getSingleQuiz,
+  updateQuiz,
 };
