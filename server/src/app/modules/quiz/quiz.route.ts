@@ -11,5 +11,6 @@ router.post(
   QuizController.createQuiz,
 );
 router.get("/", QuizController.getTeacherQuizzes)
+router.get("/:id", QuizController.getSingleQuiz)
 
 export const QuizRoutes = router;

@@ -37,14 +37,30 @@ const getTeacherQuizzes = async (teacher_id: string) => {
 
   const result = await prisma.quiz.findMany({
     where: {
-        teacher_id,
-    }
+      teacher_id,
+    },
   });
 
   return result;
 };
 
+const getSingleQuiz = async (quizId: string) => {
+  const quiz = await prisma.quiz.findUnique({
+    where: {
+      ID: quizId,
+    },
+  });
+
+  //check if quiz exists
+  if(!quiz){
+    throw new AppError(httpStatus.NOT_FOUND, "Quiz not found")
+  }
+
+  return quiz;
+};
+
 export const QuizServices = {
   createQuiz,
   getTeacherQuizzes,
+  getSingleQuiz,
 };
